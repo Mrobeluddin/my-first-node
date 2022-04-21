@@ -21,6 +21,23 @@ const users = [
     { id: 7, name: 'Jorina', email: ' Jorina@gmail.com', phone: '0179999999' },
 ]
 
+// app.get('/users', (req, res) => {
+//     res.send(users);
+// })
+
+// filter by search query parameter
+app.get('/users', (req, res) => {
+    if (req.query.name) {
+        const search = req.query.name;
+        const matched = users.filter(user => user.name.toLowerCase().includes(search));
+        res.send(matched);
+    }
+    else {
+        res.send(users);
+    }
+    res.send(users);
+})
+
 app.get('/user/:id', (req, res) => {
     console.log(req.params);
     const id = parseInt(req.params.id);
@@ -44,19 +61,6 @@ app.get('/fruits/mango/fazle', (req, res) => {
     res.send('sour soud fazle flavor');
 })
 
-
-app.get('/users', (req, res) => {
-    // filter by search query parameter
-    if (req.query.name) {
-        const search = req.query.name;
-        const matched = users.filter(user => user.name.toLowerCase().includes(search));
-        res.send(matched);
-    }
-    else {
-        res.send(users);
-    }
-    res.send(users);
-})
 
 app.listen(port, () => {
     console.log('Listening to post', port);
